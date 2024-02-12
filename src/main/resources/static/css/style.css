@@ -1,5 +1,5 @@
 body{
-    background: aquamarine !important;
+    background: #cdc8cd !important;
 }
 .bg-primary{
     background: #009688 !important;
@@ -11,4 +11,8 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
+}
+.my-card{
+    padding:20px;
+    background: white;
 }
