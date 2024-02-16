@@ -8,7 +8,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.naming.Binding;
+import javax.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -33,17 +37,25 @@ public class HomeController {
         return "signup";
     }
     @RequestMapping(value = "/do_register",method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("user") User user, @RequestParam(value = "agreement",defaultValue = "false") boolean agreement, Model model, HttpSession session){
+    public String registerUser(@Valid @ModelAttribute("user") User user ,BindingResult result1, @RequestParam(value = "agreement",defaultValue = "false") boolean agreement, Model model, HttpSession session){
         try{
             if(!agreement){
                 System.out.println("you have not agreed terms and conditions");
+                session.removeAttribute("message");
                 throw new Exception("you have not agreed terms and conditions");
+
+            }
+            if(result1.hasErrors()){
+                System.out.println("error: "+result1.toString());
+                model.addAttribute("user",user);
+                return "signup";
             }
             user.setRole("ROLE_USER");
             user.setEnabled(true);
             User result = userRepository.save(user);
             model.addAttribute("user",new User());
             session.setAttribute("message",new Message("Successfully Registered ","alert-success"));
+            session.removeAttribute("message");
             return "signup";
         }catch (Exception e){
           e.printStackTrace();

@@ -12,17 +12,23 @@
                    <div class="my-card mt-1">
                        <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-primary" role="alert">
                            <p th:text="${session.message.content}"></p>
-                           <th:block th:remove="${#session.removeAttribute('message')}"></th:block>
                        </div>
+
+
+
                        <h1 class="text-center">Register Here</h1>
-                       <form action="" th:action="@{/do_register}" method="post" th:object="${user}">
+                       <form  action="" th:action="@{/do_register}" method="post" th:object="${user}">
                            <div class="form-group">
                                <label for="name" class="form-label">Your Name</label>
-                               <input name="name" th:value="${user.name}" type="text" class="form-control" id="name" placeholder="Enter your Name" required>
+                               <input name="name" th:value="${user.name}" type="text"  class="form-control" th:classappend="${#fields.hasErrors('name')?'is-invalid':''}" id="name" placeholder="Enter your Name" required/>
+                               <div class="invalid-feedback" th:each="error : ${#fields.errors('name')}" th:text="${error}">
+                               </div>
+
                            </div>
                            <div class="form-group">
                                <label for="email" class="form-label">Your Email</label>
                                <input name="email" th:value="${user.email}" type="email" class="form-control" id="email" placeholder="Enter your Email" required>
+
                            </div>
                            <div class="form-group">
                                <label for="password" class="form-label">Password</label>
@@ -30,7 +36,7 @@
                            </div>
 
                            <div class="form-group my-3">
-                               <textarea name="about" th:value="${user.about}" class="form-control" rows="10" placeholder="Enter something yourself"></textarea>
+                               <textarea name="about" th:text="${user.about}" class="form-control" rows="10" placeholder="Enter something yourself"></textarea>
                            </div>
                            <div class="form-group form-check">
                                <input type="checkbox" name="agreement" class="form-check-input" id="agreement"/>
