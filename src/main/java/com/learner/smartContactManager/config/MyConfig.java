@@ -47,7 +47,8 @@ public class MyConfig{
         http.csrf(csrf -> csrf.disable()).authorizeRequests()
         .requestMatchers("/admin/**").hasRole("ADMIN")
         .requestMatchers("/user/**").hasRole("USER")
-        .requestMatchers("/**").permitAll().and().formLogin();
+        .requestMatchers("/**").permitAll().and().formLogin().loginPage("/signin").loginProcessingUrl("/dologin").defaultSuccessUrl("/user/index");
+//                .failureUrl("/login-fail");
 
         DefaultSecurityFilterChain defaultSecurityFilterChain = http.build();
         return defaultSecurityFilterChain;
