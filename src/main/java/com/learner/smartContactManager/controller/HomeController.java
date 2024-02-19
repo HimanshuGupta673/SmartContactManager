@@ -6,6 +6,7 @@ import com.learner.smartContactManager.entities.User;
 import com.learner.smartContactManager.helper.Message;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,8 @@ public class HomeController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/")
     public String home(Model model){
@@ -52,6 +55,7 @@ public class HomeController {
             }
             user.setRole("ROLE_USER");
             user.setEnabled(true);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             User result = userRepository.save(user);
             model.addAttribute("user",new User());
             session.setAttribute("message",new Message("Successfully Registered ","alert-success"));
@@ -63,5 +67,10 @@ public class HomeController {
           session.setAttribute("message",new Message("Something went wrong" + e.getMessage(),"alert-danger"));
           return "signup";
         }
+    }
+    @RequestMapping("signin")
+    public String login(Model model){
+        model.addAttribute("title","Login Page");
+        return "login";
     }
 }
