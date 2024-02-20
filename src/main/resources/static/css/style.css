@@ -19,7 +19,7 @@ body{
 #login .container #login-row #login-column #login-box {
     margin-top: 120px;
     max-width: 600px;
-    height: 380px;
+    height: 430px;
     border: 1px solid #9C9C9C;
     background-color: white;
 }
@@ -41,7 +41,10 @@ body{
         padding-top: 20px;
     }
     .content{
-        margin-left: 0% !important;
+        margin-left: 4% !important;
+    }
+    .formInputField{
+        width: 80%;
     }
 }
 .sidebar{
@@ -50,6 +53,7 @@ body{
     height: 100%;
     position: fixed;
     padding-top: 45px;
+    z-index: 99999999999999999999999999999999999;
 }
 .sidebar a{
     display: block;
@@ -76,4 +80,17 @@ body{
     right: 35px;
     font-size: 36px;
     cursor: pointer;
+}
+
+.menuicon{
+    padding: 20px;
+    cursor: pointer;
+}
+.cardMargin{
+    margin-right: 4%;
+}
+.formInputField{
+    width: 70%;
+}.formInputFieldExtra{
+    width: 74%;
 }

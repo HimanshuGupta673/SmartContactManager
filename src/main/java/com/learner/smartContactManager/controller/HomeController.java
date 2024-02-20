@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.naming.Binding;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -28,6 +29,7 @@ public class HomeController {
         model.addAttribute("title","Home - Smart Contact Manager");
         return "home";
     }
+
     @GetMapping("/about")
     public String about(Model model){
         model.addAttribute("title","About - Smart Contact Manager");
@@ -73,4 +75,6 @@ public class HomeController {
         model.addAttribute("title","Login Page");
         return "login";
     }
+
+
 }

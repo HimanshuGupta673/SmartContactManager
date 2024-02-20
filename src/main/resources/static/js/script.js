@@ -1,10 +1,10 @@
 const toggleSideBar = () => {
     const $sidebar = $(".sidebar");
     if ($sidebar.is(":visible")) {
-        $sidebar.hide();
-        $(".content").css("margin-left", "0%");
+        $sidebar.slideUp();
+        $(".content").animate({ marginLeft: "4%" });
     } else {
-        $sidebar.show();
-        $(".content").css("margin-left", "20%");
+        $sidebar.slideDown();
+        $(".content").animate({ marginLeft: "20%" });
     }
 }

@@ -13,7 +13,7 @@
                        <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-primary" role="alert">
                            <p th:text="${session.message.content}"></p>
                        </div>
-
+                       <th:block th:text="${@removeMessageFromSession.removeSession()}"></th:block>
 
 
                        <h1 class="text-center">Register Here</h1>

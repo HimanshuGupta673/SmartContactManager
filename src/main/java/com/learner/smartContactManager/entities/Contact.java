@@ -14,7 +14,7 @@ public class Contact {
     private String email;
     private String phone;
     private String image;
-    @Column(length = 1000)
+    @Column(length = 5000)
     private String description;
     @ManyToOne
     private User user;
@@ -89,5 +89,20 @@ public class Contact {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "cId=" + cId +
+                ", name='" + name + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", work='" + work + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
