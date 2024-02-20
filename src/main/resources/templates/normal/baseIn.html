@@ -36,7 +36,7 @@
 <div class="sidebar mt-2">
   <span onclick="toggleSideBar()" class="crossbtn">&times;</span>
   <a href="#" th:href="@{/user/index}" class="item"><i class="fas fa-home"></i>&nbsp;Home</a>
-  <a href="#" class="item"><i class="fas fa-id-card-alt"></i>&nbsp;View Contacts</a>
+  <a href="#" th:href="@{/user/showContacts/0}" class="item"><i class="fas fa-id-card-alt"></i>&nbsp;View Contacts</a>
   <a th:href="@{/user/addContact}" class="item"><i class="fas fa-pencil-alt"></i> &nbsp;Add Contacts</a>
   <a href="#" class="item"><i class="fas fa-user-circle"></i> &nbsp;Your Profile</a>
   <a href="#" class="item"><i class="fas fa-cogs"></i> &nbsp;Settings</a>

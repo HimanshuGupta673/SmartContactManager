@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/baseIn::Layout(~{::section})">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<section>
+    <div class="card cardMargin">
+        <div class="card-body">
+            <h1 class="text-center">Your Contacts</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">User Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="c:${contacts}">
+                    <th th:text="${'USER'+c.cId}" scope="row">1</th>
+                    <td th:text="${c.name}">Larry</td>
+                    <td th:text="${c.phone}">the Bird</td>
+                    <td th:text="${c.email}">@twitter</td>
+                    <td>
+                        <i class="fa fa-trash"></i>
+                        <i class="fa fa-pen mx-3"></i>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li  th:if="${currentPage!=0}" class="page-item"><a th:href="@{'/user/showContacts/' + ${currentPage - 1}}" class="page-link" href="#">Previous</a></li>
+                    <li  th:each="i : ${#numbers.sequence(1,totalPages)}" th:classappend="${currentPage+1==i?'active':''}" class="page-item"> <a th:href="@{'/user/showContacts/' + ${i - 1}}" class="page-link" th:text="${i}"></a></li>
+
+                    <li th:if="${currentPage+1!=totalPages}" class="page-item"><a th:href="@{'/user/showContacts/' + ${currentPage + 1}}" class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
 </body>
 </html>
