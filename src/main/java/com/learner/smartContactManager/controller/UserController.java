@@ -23,6 +23,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -59,6 +60,7 @@ public class UserController {
 
         if(file.isEmpty()){
             System.out.println("file is empty");
+            contact.setImage("user.png");
         }else{
             contact.setImage(file.getOriginalFilename());
             File saveFile = new ClassPathResource("static/img").getFile();
@@ -92,6 +94,36 @@ public class UserController {
         model.addAttribute("currentPage",page);
         model.addAttribute("totalPages",contacts.getTotalPages());
         return "normal/showContacts";
+    }
+
+    @RequestMapping("/{cId}/contact")
+    public String showContactDetail(@PathVariable("cId") Integer cId,Model model,Principal principal){
+        Optional<Contact> contactOptional = contactRepository.findById(cId);
+        Contact contact = contactOptional.get();
+
+        String name = principal.getName();
+        User user = userRepository.getUserByUserName(name);
+
+        if(user.getId()==contact.getUser().getId()){
+            model.addAttribute("title",contact.getName());
+         model.addAttribute("contact",contact);
+        }
+
+
+         return "normal/showContactDetail";
+    }
+
+    @RequestMapping("/delete/{cId}")
+    public String deleteContact(@PathVariable("cId") Integer cId,HttpSession session,Model model,Principal principal){
+        Contact contact = contactRepository.findById(cId).get();
+        String name = principal.getName();
+        User user = userRepository.getUserByUserName(name);
+        if(user.getId()==contact.getUser().getId()){
+            contact.setUser(null);
+            contactRepository.delete(contact);
+            session.setAttribute("message",new Message("User has been deleted successfully!","success"));
+        }
+        return "redirect:/user/showContacts/0";
     }
 
 }

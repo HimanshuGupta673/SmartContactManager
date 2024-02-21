@@ -22,11 +22,18 @@
                 <tbody>
                 <tr th:each="c:${contacts}">
                     <th th:text="${'USER'+c.cId}" scope="row">1</th>
-                    <td th:text="${c.name}">Larry</td>
-                    <td th:text="${c.phone}">the Bird</td>
-                    <td th:text="${c.email}">@twitter</td>
                     <td>
-                        <i class="fa fa-trash"></i>
+                        <img src="" class="profileImage" th:src="@{'/img/'+${c.image}}" alt=""/>
+                        <span th:text="${c.name}" ></span>
+                    </td>
+                    <td th:text="${c.phone}">the Bird</td>
+                    <td >
+                        <a th:href="@{'/user/'+${c.cId}+'/contact'}">
+                            <span th:text="${c.email}"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a th:onclick="|deleteContact(${c.cId})|"><i class="fa fa-trash text-danger"></i></a>
                         <i class="fa fa-pen mx-3"></i>
                     </td>
                 </tr>
