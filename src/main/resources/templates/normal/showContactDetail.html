@@ -39,8 +39,10 @@
                         </tr>
                     </tbody>
                 </table>
-                   <div>
-                       <a th:onclick="|deleteContact(${contact.cId})|" type="button" class="btn btn-warning">Update</a>
+                   <div class="d-flex justify-content-center">
+                       <form method="POST" th:action="@{'/user/updateContact/'+${contact.cId}} ">
+                           <button type="submit" class="btn btn-warning mx-3">Update</button>
+                       </form>
                        <a th:href="@{'/user/delete/'+${contact.cId}}" type="button" class="btn btn-danger">Delete</a>
                    </div>
             </div>

@@ -2,6 +2,8 @@ package com.learner.smartContactManager.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "CONTACT")
 public class Contact {
@@ -105,4 +107,12 @@ public class Contact {
                 ", user=" + user +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+//        this is used to delete contact ...internally jbm call it and check whether in user.getContact().remove(contact) any of all getcontact is matching with a particular contact then remove that particular contact
+        return this.cId ==((Contact)obj).getcId();
+    }
+
+
 }

@@ -32,9 +32,14 @@
                             <span th:text="${c.email}"></span>
                         </a>
                     </td>
-                    <td>
-                        <a th:onclick="|deleteContact(${c.cId})|"><i class="fa fa-trash text-danger"></i></a>
-                        <i class="fa fa-pen mx-3"></i>
+                    <td class="d-flex">
+                        <a th:onclick="|deleteContact(${c.cId})|"><i style="cursor: pointer" class="fa fa-trash text-danger"></i></a>
+                        <form id="updateForm" method="post" th:action="@{'/user/updateContact/'+${c.cId}}">
+
+                            <i th:type="submit" class="fa fa-pen mx-3 updateIcon"></i>
+
+
+                        </form>
                     </td>
                 </tr>
                 </tbody>
@@ -50,6 +55,15 @@
             </nav>
         </div>
     </div>
+
+    <script>
+        // Function to handle the click event on the icon
+        document.querySelectorAll('.updateIcon').forEach(function(icon) {
+            icon.addEventListener('click', function() {
+                this.closest('form').submit();
+            });
+        });
+    </script>
 </section>
 </body>
 </html>

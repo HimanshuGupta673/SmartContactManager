@@ -119,11 +119,54 @@ public class UserController {
         String name = principal.getName();
         User user = userRepository.getUserByUserName(name);
         if(user.getId()==contact.getUser().getId()){
-            contact.setUser(null);
-            contactRepository.delete(contact);
+            user.getContacts().remove(contact);  //it use equals object internally...
+            userRepository.save(user);
             session.setAttribute("message",new Message("User has been deleted successfully!","success"));
         }
         return "redirect:/user/showContacts/0";
     }
+    @PostMapping("/updateContact/{cId}")
+    public String updateContact(@PathVariable("cId") Integer cId, Model model){
+        Contact contact = contactRepository.findById(cId).get();
+        model.addAttribute("title","Update Contact");
+        model.addAttribute("contact",contact);
+        return "normal/updateContact";
+    }
 
+    @RequestMapping(value = "/processUpdate",method = RequestMethod.POST)
+    public String processUpdate(@ModelAttribute Contact contact,@RequestParam("profileImage") MultipartFile file,Model model,Principal principal,HttpSession session){
+        Contact oldContactDetail = contactRepository.findById(contact.getcId()).get();
+        try{
+             if(!file.isEmpty()){
+//                 delete existing image
+                 File deleteFile = new ClassPathResource("static/img").getFile();
+                 File file1 = new File(deleteFile,oldContactDetail.getImage());
+                 file1.delete();
+
+
+
+//                 update new image
+                 File saveFile = new ClassPathResource("static/img").getFile();
+                 Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+                 Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+                 contact.setImage(file.getOriginalFilename());
+             }else{
+               contact.setImage(oldContactDetail.getImage());
+             }
+             User user = userRepository.getUserByUserName(principal.getName());
+             contact.setUser(user);
+             contactRepository.save(contact);
+             session.setAttribute("message",new Message("Your contact has been updated !","success"));
+         }catch (Exception e){
+             System.out.println(e.getMessage());
+             e.printStackTrace();
+         }
+
+        return "redirect:/user/"+contact.getcId()+"/contact";
+    }
+    @RequestMapping("/profile")
+    public String profile(Model model){
+        model.addAttribute("title","Profile");
+        return "normal/profile";
+    }
 }

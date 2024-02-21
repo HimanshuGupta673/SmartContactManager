@@ -24,7 +24,8 @@ public class User {
     @Column(length = 500)
     private String about;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user") // --> as user is saved then all contacts regarding to this user will save automativally and when user is deleted the contacts regarding to this will be deleted automatically
+//    orphan removal = true means when child entity is unlinked from parent entity then the parent entity will be removed automatically
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "user") // --> as user is saved then all contacts regarding to this user will save automativally and when user is deleted the contacts regarding to this will be deleted automatically
     private List<Contact> contacts = new ArrayList<>();
 
 
