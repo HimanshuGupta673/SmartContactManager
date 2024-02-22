@@ -106,3 +106,22 @@ body{
 }.formInputFieldExtra{
     width: 74%;
 }
+
+ .search-container{
+     position: relative;
+ }
+ .search-result{
+     position: absolute;
+     background: white;
+     width: 100%;
+     padding: 10px;
+     border: 1px solid gray;
+     display: none;
+ }
+ .themeColor{
+     color: #009688!important;
+ }
+ .active{
+     background: #009688 !important;
+     color: white!important;
+ }

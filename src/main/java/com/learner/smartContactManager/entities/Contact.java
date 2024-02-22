@@ -1,5 +1,6 @@
 package com.learner.smartContactManager.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -19,6 +20,7 @@ public class Contact {
     @Column(length = 5000)
     private String description;
     @ManyToOne
+    @JsonIgnore  //This annotation is used to instruct serialization frameworks like Jackson (which is commonly used in Spring applications for JSON serialization and deserialization) to ignore the annotated field during the serialization process. Avoiding Circular References: If the User class has a reference back to Contact (bi-directional relationship), omitting the user field in the JSON serialization of Contact objects can prevent infinite recursion or circular references during the serialization process.
     private User user;
 
     public int getcId() {

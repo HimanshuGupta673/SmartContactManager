@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,9 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private ContactRepository contactRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @ModelAttribute
     public void addCommonData(Model model, Principal principal){
         String userName = principal.getName();
@@ -60,7 +64,7 @@ public class UserController {
 
         if(file.isEmpty()){
             System.out.println("file is empty");
-            contact.setImage("user.png");
+            contact.setImage("default.png");
         }else{
             contact.setImage(file.getOriginalFilename());
             File saveFile = new ClassPathResource("static/img").getFile();
@@ -168,5 +172,26 @@ public class UserController {
     public String profile(Model model){
         model.addAttribute("title","Profile");
         return "normal/profile";
+    }
+
+    @RequestMapping("/settings")
+    public String settings(Model model){
+        model.addAttribute("title","Settings");
+        return "normal/settings";
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword,Principal principal,HttpSession session){
+        User user = userRepository.getUserByUserName(principal.getName());
+        if (bCryptPasswordEncoder.matches(oldPassword,user.getPassword())){
+            user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            userRepository.save(user);
+            session.setAttribute("message",new Message("Your password has been updated !","success"));
+        }else{
+            session.setAttribute("message",new Message("Wrong old Password","danger"));
+            return "redirect:/user/settings";
+        }
+
+        return "redirect:/user/index";
     }
 }

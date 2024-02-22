@@ -1,6 +1,7 @@
 package com.learner.smartContactManager.dao;
 
 import com.learner.smartContactManager.entities.Contact;
+import com.learner.smartContactManager.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,5 @@ public interface ContactRepository extends JpaRepository<Contact,Integer> {
   @Query("from Contact as c where c.user.id=:userId")
     public Page<Contact> findContactByUser(@Param("userId")int userId, Pageable pageable);
 
+  public List<Contact> findByNameContainingAndUser(String name, User user);
 }

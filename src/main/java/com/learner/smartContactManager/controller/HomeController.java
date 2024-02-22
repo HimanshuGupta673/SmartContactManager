@@ -57,6 +57,7 @@ public class HomeController {
             }
             user.setRole("ROLE_USER");
             user.setEnabled(true);
+            user.setImageUrl("user.png");
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             User result = userRepository.save(user);
             model.addAttribute("user",new User());
