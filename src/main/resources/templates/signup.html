@@ -20,6 +20,7 @@
                        <form  action="" th:action="@{/do_register}" method="post" th:object="${user}">
                            <div class="form-group">
                                <label for="name" class="form-label">Your Name</label>
+<!--                                      here name must match with properties specified in the user class-->
                                <input name="name" th:value="${user.name}" type="text"  class="form-control" th:classappend="${#fields.hasErrors('name')?'is-invalid':''}" id="name" placeholder="Enter your Name" required/>
                                <div class="invalid-feedback" th:each="error : ${#fields.errors('name')}" th:text="${error}">
                                </div>

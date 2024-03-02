@@ -63,14 +63,12 @@ public class UserController {
         User user = userRepository.getUserByUserName(name);
 
         if(file.isEmpty()){
-            System.out.println("file is empty");
             contact.setImage("default.png");
         }else{
             contact.setImage(file.getOriginalFilename());
             File saveFile = new ClassPathResource("static/img").getFile();
             Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
             Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Image is uploaded!");
         }
 
         contact.setUser(user);
@@ -110,7 +108,7 @@ public class UserController {
 
         if(user.getId()==contact.getUser().getId()){
             model.addAttribute("title",contact.getName());
-         model.addAttribute("contact",contact);
+            model.addAttribute("contact",contact);
         }
 
 

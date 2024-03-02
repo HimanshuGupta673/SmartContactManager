@@ -42,11 +42,10 @@ public class HomeController {
         return "signup";
     }
     @RequestMapping(value = "/do_register",method = RequestMethod.POST)
+//    @valid is using to check is all the contrains applied on user.java class properties are followed or not if not then show errro and it comes from hibernate validator and javax-validation-api package
     public String registerUser(@Valid @ModelAttribute("user") User user ,BindingResult result1, @RequestParam(value = "agreement",defaultValue = "false") boolean agreement, Model model, HttpSession session){
         try{
             if(!agreement){
-                System.out.println("you have not agreed terms and conditions");
-                session.removeAttribute("message");
                 throw new Exception("you have not agreed terms and conditions");
 
             }
@@ -62,7 +61,6 @@ public class HomeController {
             User result = userRepository.save(user);
             model.addAttribute("user",new User());
             session.setAttribute("message",new Message("Successfully Registered ","alert-success"));
-            session.removeAttribute("message");
             return "signup";
         }catch (Exception e){
           e.printStackTrace();

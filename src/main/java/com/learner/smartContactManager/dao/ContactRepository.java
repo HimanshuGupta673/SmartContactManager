@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ContactRepository extends JpaRepository<Contact,Integer> {
   @Query("from Contact as c where c.user.id=:userId")
-    public Page<Contact> findContactByUser(@Param("userId")int userId, Pageable pageable);
+  public Page<Contact> findContactByUser(@Param("userId")int userId, Pageable pageable);
 
   public List<Contact> findByNameContainingAndUser(String name, User user);
 }
