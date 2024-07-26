@@ -55,8 +55,6 @@ public class ForgotController {
            if(user==null){
                session.setAttribute("message","User does not exist with this email !");
                return "forgotEmailForm";
-           }else{
-
            }
            return "changePasswordForm";
        }else{
@@ -64,7 +62,7 @@ public class ForgotController {
            return "verifyOtp";
        }
     }
-    @PostMapping("/changePawwword")
+    @PostMapping("/changePassword")
     public String changePassword(@RequestParam("newPassword") String newPassword, HttpSession session){
        String email = (String)session.getAttribute("email");
        User user = userRepository.getUserByUserName(email);
